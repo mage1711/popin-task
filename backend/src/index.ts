@@ -13,6 +13,11 @@ app.post('/api/user/username', async (req, res) => {
   try {
     const { username, firebaseId } = req.body;
     
+    console.log('New username registration:', {
+      chosenUsername: username,
+      firebaseId: firebaseId
+    });
+    
     await db.collection('users').doc(firebaseId).set({
       username,
       updatedAt: new Date()
