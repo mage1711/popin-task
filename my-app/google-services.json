@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "80546222811",
+    "project_id": "typebehind",
+    "storage_bucket": "typebehind.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:80546222811:android:cd08961be91ef6a27972fe",
+        "android_client_info": {
+          "package_name": "com.app.typeBehind"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "80546222811-ugvrj74iie1qd8i7efu8agh0bvq3edht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnTArenj2CpD71r5qSLkx7qScW7Wb85J0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "80546222811-ugvrj74iie1qd8i7efu8agh0bvq3edht.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "80546222811-jji24ek4cir38rr3s5rmbjqkfbrb6fsd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.typeBehind"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
