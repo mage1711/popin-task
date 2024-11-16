@@ -27,6 +27,23 @@ app.post('/api/user/username', async (req, res) => {
   }
 });
 
+app.get('/api/user/:firebaseId', async (req, res) => {
+  try {
+    const { firebaseId } = req.params;
+    const userDoc = await db.collection('users').doc(firebaseId).get();
+    if (!userDoc.exists) {
+    res.json({ username: null });
+    }
+    res.json(userDoc.data());
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to fetch user data' 
+    });
+  }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
