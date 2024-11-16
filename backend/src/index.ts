@@ -1,17 +1,18 @@
 import express from 'express';
 import cors from 'cors';
 import { db } from './config/firebase';
+import { authenticateToken, AuthRequest } from './middleware/auth';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
+// can also use authenticated 
 app.post('/api/user/username', async (req, res) => {
   try {
     const { username, firebaseId } = req.body;
     
-    // Update user document with username
     await db.collection('users').doc(firebaseId).set({
       username,
       updatedAt: new Date()
@@ -27,12 +28,13 @@ app.post('/api/user/username', async (req, res) => {
   }
 });
 
-app.get('/api/user/:firebaseId', async (req, res) => {
+app.get('/api/user', authenticateToken, async (req: AuthRequest, res) => {
   try {
-    const { firebaseId } = req.params;
-    const userDoc = await db.collection('users').doc(firebaseId).get();
+    const userId = req.user!.uid;
+
+    const userDoc = await db.collection('users').doc(userId).get();
     if (!userDoc.exists) {
-    res.json({ username: null });
+      res.json({ username: null });
     }
     res.json(userDoc.data());
   } catch (error) {

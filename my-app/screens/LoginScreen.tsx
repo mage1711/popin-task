@@ -46,7 +46,14 @@ export default function LoginScreen({ navigation }: Props) {
       const user = await signIn();
       if (user) {
         try {
-          const response = await axios.get(`http://localhost:3000/api/user/${user.uid}`);
+          const response = await axios.get(
+            'http://localhost:3000/api/user',
+            {
+              headers: {
+                Authorization: `Bearer ${await user.getIdToken()}`
+              }
+            }
+          );
           const userData = response.data;
 
           if (userData.username) {

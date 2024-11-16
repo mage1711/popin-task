@@ -1,9 +1,16 @@
+import { z } from 'zod';
 import { useState } from 'react';
 import { View, StyleSheet, TextInput, Button, Text } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../navigation/AppStack';
 import { RouteProp } from '@react-navigation/native';
 import axios from 'axios';
+
+// Define the username schema
+const usernameSchema = z.string()
+  .min(4, 'Username must be at least 4 characters long')
+  .regex(/^@/, 'Username must start with @')
+  .trim();
 
 type Props = {
   navigation: NativeStackNavigationProp<AppStackParamList, 'Onboarding'>;
@@ -17,18 +24,15 @@ export default function OnboardingScreen({ navigation, route }: Props) {
   const { user } = route.params;
 
   const validateUsername = (value: string): string => {
-    const trimmed = value.trim();
-    
-    if (!trimmed) {
-      return 'Username is required';
+    try {
+      usernameSchema.parse(value);
+      return '';
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return error.errors[0].message;
+      }
+      return 'Invalid username';
     }
-    if (!trimmed.startsWith('@')) {
-      return 'Username must start with @';
-    }
-    if (trimmed.length < 4) {
-      return 'Username must be at least 4 characters long';
-    }
-    return '';
   };
 
   const handleSubmit = async () => {
