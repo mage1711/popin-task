@@ -5,6 +5,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../navigation/AppStack';
 import { RouteProp } from '@react-navigation/native';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 
 // Define the username schema
 const usernameSchema = z.string()
@@ -46,13 +47,18 @@ export default function OnboardingScreen({ navigation, route }: Props) {
 
     setLoading(true);
     try {
-      await axios.post('http://localhost:3000/api/user/username', {
+      await axios.post(API_BASE_URL + '/api/user/username', {
         username: trimmedUsername,
         firebaseId: user.firebaseId,
       });
       navigation.replace('Home', { username: trimmedUsername });
     } catch (error) {
-      setError('Failed to save username');
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data?.error || 'Network error occurred');
+      } else {
+        setError('An unexpected error occurred');
+      }
+      console.error('Username update error:', error);
     } finally {
       setLoading(false);
     }

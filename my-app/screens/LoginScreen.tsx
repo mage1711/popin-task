@@ -4,6 +4,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { AppStackParamList } from '../navigation/AppStack';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 
 type Props = {
   navigation: NativeStackNavigationProp<AppStackParamList, 'Login'>;
@@ -47,7 +48,7 @@ export default function LoginScreen({ navigation }: Props) {
       if (user) {
         try {
           const response = await axios.get(
-            'http://localhost:3000/api/user',
+            `${API_BASE_URL}/api/user`,
             {
               headers: {
                 Authorization: `Bearer ${await user.getIdToken()}`
