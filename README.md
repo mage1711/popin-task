@@ -79,6 +79,6 @@ npm install
    - **Android**: Press `a` to launch on an Android emulator (requires Android Studio).
    - **Web**: Press `w` to open in a web browser.
 
-4. Ensure the app is running in **development mode**:
+4. Ensure the app is running in **development mode**
 
 ---

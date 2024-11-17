@@ -1,12 +1,8 @@
 import { useState } from 'react';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { SignInError } from '../types/user';
 
-export type SignInError = {
-  code: string;
-  message: string;
-  technical?: string;
-}
 
 export const useGoogleSignIn = () => {
   const [loading, setLoading] = useState(false);
@@ -39,14 +35,11 @@ export const useGoogleSignIn = () => {
     try {
       setLoading(true);
       setError(null);
-
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
       const signInResult = await GoogleSignin.signIn();
 
       let idToken = signInResult.data?.idToken;
-      if (!idToken) {
-        idToken = signInResult.idToken;
-      }
+
       if (!idToken) {
         throw new Error('No ID token found');
       }
